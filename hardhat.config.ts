@@ -4,6 +4,9 @@ import '@nomiclabs/hardhat-waffle'
 import 'hardhat-typechain'
 import 'hardhat-watcher'
 
+const fs = require('fs');
+const private_key = fs.readFileSync('.secret').toString().trim();
+
 const LOW_OPTIMIZER_COMPILER_SETTINGS = {
   version: '0.7.6',
   settings: {
@@ -77,6 +80,15 @@ export default {
     },
     optimism: {
       url: `https://optimism-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    },
+    serenity: {
+      url: 'https://jsonrpc.serenity.aura.network',
+      chainId: 1236,
+      gasPrice: 'auto',
+      accounts: [private_key],
+      gas: 20000000,
+      timeout: 120000,
+      throwOnTransactionFailures: true,
     },
   },
   etherscan: {
